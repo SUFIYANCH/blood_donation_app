@@ -41,6 +41,11 @@ dependencies:
   smooth_page_indicator: ^1.0.1
   lottie: ^2.3.0
   flutter_riverpod: ^2.4.4
+  flutter_launcher_icons: ^0.13.1
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "lib/assets/blood.png"  
 
 dev_dependencies:
   flutter_test:
