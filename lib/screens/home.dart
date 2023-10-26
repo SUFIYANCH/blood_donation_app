@@ -1,31 +1,19 @@
 import 'package:blood_donation_app/colors/colors.dart';
-import 'package:blood_donation_app/screens/add.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:blood_donation_app/providers/provider.dart';
+import 'package:blood_donation_app/services/service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  final CollectionReference donors =
-      FirebaseFirestore.instance.collection('donors');
-
-  void deleteDonor(docId) {
-    donors.doc(docId).delete();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: primaryColor,
         onPressed: () {
+          ref.read(isEditProvider.notifier).state = false;
           Navigator.pushNamed(context, '/add');
         },
         child: const Icon(
@@ -34,20 +22,20 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       appBar: AppBar(
+        centerTitle: true,
         title: const Text('Blood Donation App'),
         backgroundColor: primaryColor,
       ),
       body: Container(
         color: Colors.white,
         child: StreamBuilder(
-          stream: donors.orderBy('name').snapshots(),
-          builder: (context, AsyncSnapshot snapshot) {
+          stream: Service().getDonor(),
+          builder: (context, snapshot) {
             if (snapshot.hasData) {
+              var donors = snapshot.data!.docs;
               return ListView.builder(
-                itemCount: snapshot.data!.docs.length,
+                itemCount: donors.length,
                 itemBuilder: (context, index) {
-                  final DocumentSnapshot donorSnap = snapshot.data.docs[index];
-
                   return Container(
                     margin: const EdgeInsets.only(
                         right: 10, left: 10, bottom: 10, top: 20),
@@ -60,31 +48,29 @@ class _HomePageState extends State<HomePage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          child: CircleAvatar(
-                            backgroundColor: primaryColor,
-                            radius: 30,
-                            child: Text(
-                              donorSnap['group'].toString(),
-                              style: const TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.w900,
-                                  color: Colors.white),
-                            ),
+                        CircleAvatar(
+                          backgroundColor: primaryColor,
+                          radius: 30,
+                          child: Text(
+                            donors[index].data().bloodgrp,
+                            style: const TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.w900,
+                                color: Colors.white),
                           ),
                         ),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              donorSnap['name'],
+                              donors[index].data().name,
                               style: const TextStyle(
                                   color: secondaryColor,
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600),
                             ),
                             Text(
-                              donorSnap['phone'].toString(),
+                              donors[index].data().phone,
                               style: const TextStyle(
                                   color: secondaryColor,
                                   fontSize: 18,
@@ -96,13 +82,10 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             IconButton(
                               onPressed: () {
-                                Navigator.pushNamed(context, '/update',
-                                    arguments: {
-                                      'name': donorSnap['name'],
-                                      'phone': donorSnap['phone'].toString(),
-                                      'group': donorSnap['group'],
-                                      'id': donorSnap.id
-                                    });
+                                ref.read(idProvider.notifier).state =
+                                    donors[index].id;
+                                ref.read(isEditProvider.notifier).state = true;
+                                Navigator.pushNamed(context, '/add');
                               },
                               icon: const Icon(Icons.edit),
                               color: secondaryColor,
@@ -124,8 +107,8 @@ class _HomePageState extends State<HomePage> {
                                                 child: const Text("Cancel")),
                                             TextButton(
                                                 onPressed: (() {
-                                                  deleteDonor(donorSnap.id);
-
+                                                  Service().deleteDonor(
+                                                      donors[index].id);
                                                   Navigator.of(context).pop();
                                                 }),
                                                 child: const Text("Delete"))
@@ -143,9 +126,11 @@ class _HomePageState extends State<HomePage> {
                   );
                 },
               );
+            } else {
+              return const Center(
+                child: Text('No Donor Registered'),
+              );
             }
-
-            return Container();
           },
         ),
       ),

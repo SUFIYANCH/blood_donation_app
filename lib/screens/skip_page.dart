@@ -1,4 +1,5 @@
 import 'package:blood_donation_app/colors/colors.dart';
+import 'package:blood_donation_app/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -67,21 +68,25 @@ class _SkipPageState extends State<SkipPage> {
                   activeDotColor: Colors.black),
               onDotClicked: (dotindex) {
                 _controller.animateToPage(dotindex,
-                    duration: Duration(microseconds: 700),
+                    duration: const Duration(microseconds: 700),
                     curve: Curves.linear);
               },
             ),
           ),
           Container(
-            margin: EdgeInsets.only(bottom: 24),
+            margin: const EdgeInsets.only(bottom: 24),
             height: 50,
             width: 150,
             child: TextButton(
               style: TextButton.styleFrom(
-                  backgroundColor: buttonColor, shape: StadiumBorder()),
+                  backgroundColor: buttonColor, shape: const StadiumBorder()),
               onPressed: () {
                 currentpageindex == 2
-                    ? Navigator.pushNamed(context, "/")
+                    ? Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                            builder: ((context) => const HomePage())),
+                        (route) => false,
+                      )
                     : _controller.nextPage(
                         duration: const Duration(milliseconds: 300),
                         curve: Curves.linear,
@@ -89,7 +94,7 @@ class _SkipPageState extends State<SkipPage> {
               },
               child: Text(
                 currentpageindex == 2 ? "Start" : 'Next',
-                style: TextStyle(
+                style: const TextStyle(
                     color: secondaryColor,
                     fontSize: 28,
                     fontWeight: FontWeight.bold),

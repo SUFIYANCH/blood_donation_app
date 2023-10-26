@@ -40,6 +40,7 @@ dependencies:
   cloud_firestore: ^4.4.4
   smooth_page_indicator: ^1.0.1
   lottie: ^2.3.0
+  flutter_riverpod: ^2.4.4
 
 dev_dependencies:
   flutter_test:

@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "343994930605-fe97vfu6dc3u3pfjrtkuv3ci6ftmj7kh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.blood_donation_app",
+            "certificate_hash": "69f06dba927fe303ed5bfe50e00b7f228aa3779c"
+          }
+        },
+        {
           "client_id": "343994930605-n85ob85f5h7hcj3c6ksm1lacuib91di3.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +37,13 @@
             {
               "client_id": "343994930605-n85ob85f5h7hcj3c6ksm1lacuib91di3.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "343994930605-om22e4l327a59tv8iq0ovd2v1tbcitrt.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.bloodDonationApp"
+              }
             }
           ]
         }

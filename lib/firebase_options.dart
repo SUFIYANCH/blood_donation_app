@@ -67,6 +67,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '343994930605',
     projectId: 'blooddonationapp-a005e',
     storageBucket: 'blooddonationapp-a005e.appspot.com',
+    androidClientId: '343994930605-fe97vfu6dc3u3pfjrtkuv3ci6ftmj7kh.apps.googleusercontent.com',
     iosClientId: '343994930605-om22e4l327a59tv8iq0ovd2v1tbcitrt.apps.googleusercontent.com',
     iosBundleId: 'com.example.bloodDonationApp',
   );
@@ -77,6 +78,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '343994930605',
     projectId: 'blooddonationapp-a005e',
     storageBucket: 'blooddonationapp-a005e.appspot.com',
+    androidClientId: '343994930605-fe97vfu6dc3u3pfjrtkuv3ci6ftmj7kh.apps.googleusercontent.com',
     iosClientId: '343994930605-om22e4l327a59tv8iq0ovd2v1tbcitrt.apps.googleusercontent.com',
     iosBundleId: 'com.example.bloodDonationApp',
   );

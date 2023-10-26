@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:blood_donation_app/screens/home.dart';
+import 'package:blood_donation_app/screens/skip_page.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -15,7 +15,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     Timer(const Duration(seconds: 5), () {
-      Navigator.pushNamed(context, '/skip');
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: ((context) => const SkipPage())));
     });
     super.initState();
   }
@@ -23,33 +24,23 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFDFDCD3),
+      backgroundColor: const Color(0xFFDFDCD3),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Lottie.network(
                 "https://assets10.lottiefiles.com/packages/lf20_LWQZg8blao.json"),
-            // Image(
-            //   image: AssetImage("lib/assets/blood-removebg-preview.png"),
-            // ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
-            Text(
+            const Text(
               "Blood Donation",
               style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                   color: Color(0xffbe151c)),
             ),
-            // Text(
-            //   "Donation",
-            //   style: TextStyle(
-            //       fontSize: 50,
-            //       fontWeight: FontWeight.bold,
-            //       color: Color(0xffbe151c)),
-            // )
           ],
         ),
       ),
